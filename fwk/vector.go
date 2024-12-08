@@ -58,3 +58,17 @@ func AbsVec[V constraints.Signed](a []V) V {
 
 	return sum
 }
+
+func IsVecIn2DBounds[V constraints.Signed](board [][]rune, vec []V) bool {
+	if len(vec) != 2 {
+		panic("Vector should be 2D.")
+	}
+
+	y := int(vec[0])
+	x := int(vec[1])
+	if y < 0 || y >= len(board) || x < 0 || x >= len(board[y]) {
+		return false
+	}
+
+	return true
+}
