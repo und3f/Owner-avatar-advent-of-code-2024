@@ -107,12 +107,5 @@ func buildAntennasMap(amap [][]rune) map[rune][][]int {
 }
 
 func buildAntinodes(amap [][]rune) [][]rune {
-	antinodes := make([][]rune, len(amap))
-	for i, _ := range amap {
-		antinodes[i] = make([]rune, len(amap[i]))
-		for j := range antinodes[i] {
-			antinodes[i][j] = '.'
-		}
-	}
-	return antinodes
+	return fwk.GenerateRunesLines(len(amap), len(amap[0]), '.')
 }

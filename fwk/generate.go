@@ -24,3 +24,14 @@ func GenerateStringRange(start rune, end rune) string {
 
 	return buf.String()
 }
+
+func GenerateRunesLines(height, width int, fill rune) [][]rune {
+	board := make([][]rune, height)
+	for i, _ := range board {
+		board[i] = make([]rune, width)
+		for j := range board[i] {
+			board[i][j] = fill
+		}
+	}
+	return board
+}
