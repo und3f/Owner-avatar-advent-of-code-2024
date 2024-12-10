@@ -30,3 +30,15 @@ func FindValueInSortedSlice[V constraints.Ordered](arr []V, value V) int {
 
 	return -1
 }
+
+func CountRunes(input [][]rune, r rune) int {
+	var sum int
+	for _, row := range input {
+		for _, v := range row {
+			if v == r {
+				sum++
+			}
+		}
+	}
+	return sum
+}
