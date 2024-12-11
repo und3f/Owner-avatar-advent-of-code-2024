@@ -2,6 +2,7 @@ package fwk
 
 import (
 	"bytes"
+	"fmt"
 
 	"golang.org/x/exp/constraints"
 )
@@ -24,7 +25,7 @@ func NewInfiniteGrid[V constraints.Integer]() Grid[V] {
 	return &InfiniteGrid[V]{
 		items:        make(map[int]map[int]V),
 		defaultValue: '.',
-		stringer:     func(v V) string { return string(v) },
+		stringer:     func(v V) string { return fmt.Sprintf("%c", v) },
 	}
 }
 
