@@ -3,8 +3,10 @@ package main
 import (
 	"fmt"
 	"math"
+	"runtime"
 	"strconv"
 	"strings"
+	"sync"
 
 	"github.com/und3f/aoc/2024/fwk"
 )
@@ -49,15 +51,37 @@ func part1(stones []uint64) {
 }
 
 func part2(stones []uint64) {
-	blinker := NewCachableBlinker(CACHE_STEP)
+	threads := runtime.NumCPU()
+	stonesOut := make(chan uint64, len(stones))
+	stonesIn := make(chan uint64)
+
+	var wg sync.WaitGroup
+	for i := 0; i < threads; i++ {
+		go func(id int) {
+			wg.Add(1)
+
+			defer wg.Done()
+
+			blinker := NewCachableBlinker(CACHE_STEP)
+
+			for stone := range stonesIn {
+				stonesOut <- blinker.BlinkNCount(stone, PART2_STEPS)
+			}
+		}(i)
+	}
+
+	for _, stone := range stones {
+		stonesIn <- stone
+	}
+
+	close(stonesIn)
+	wg.Wait()
+	close(stonesOut)
 
 	var sum uint64
-
-	for i, stone := range stones {
-		fmt.Printf("\rPart2 progress: %2d%%", 100*i/len(stones))
-		sum += blinker.BlinkNCount(stone, PART2_STEPS)
+	for count := range stonesOut {
+		sum += count
 	}
-	fmt.Printf("%20s\r", "")
 
 	fwk.Solution(2, sum)
 }
@@ -75,8 +99,10 @@ func (b *CachableBlinker) BlinkNCount(stone uint64, steps uint64) uint64 {
 	}
 
 	stones, exists := b.cache[stone]
+
 	if !exists {
 		stones = BlinkNSingleStone(stone, b.step)
+
 		b.cache[stone] = stones
 	}
 
