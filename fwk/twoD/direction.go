@@ -9,6 +9,15 @@ package twoD
  *  2|
  */
 
+type FourDirectionsIndex int
+
+const (
+	DirectionNorthI FourDirectionsIndex = iota
+	DirectionEastI
+	DirectionSouthI
+	DirectionWestI
+)
+
 var (
 	DirectionNorth = []int{-1, 0}
 	DirectionSouth = []int{+1, 0}
@@ -22,6 +31,13 @@ var (
 	DirectionNW = []int{-1, -1}
 	DirectionSE = []int{+1, +1}
 	DirectionSW = []int{+1, -1}
+
+	FourDirections = [4][]int{
+		DirectionNorth,
+		DirectionEast,
+		DirectionSouth,
+		DirectionWest,
+	}
 
 	CardinalDirections = map[string][]int{
 		"n": DirectionNorth,

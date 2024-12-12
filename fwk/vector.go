@@ -72,3 +72,11 @@ func IsVecIn2DBounds[V constraints.Signed](board [][]rune, vec []V) bool {
 
 	return true
 }
+
+func HashVect[V constraints.Integer](board [][]rune, vec []V) int {
+	return len(board)*int(vec[0]) + int(vec[1])
+}
+
+func CalcBoardVertices(board [][]rune) int {
+	return len(board) * len(board[0])
+}
