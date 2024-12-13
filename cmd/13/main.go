@@ -5,6 +5,7 @@ import (
 	"os"
 	"os/exec"
 	"regexp"
+	"slices"
 	"strconv"
 	"strings"
 
@@ -46,9 +47,14 @@ func part1(input []ClawMachine) {
 func part2(input []ClawMachine) {
 	var sum uint64 = 0
 
-	for _, m := range input {
-		m.Prize = []uint64{m.Prize[0] + ADDITION_P2, m.Prize[1] + ADDITION_P2}
-		sum += CountRequiredTokensP2(m)
+	p2Input := slices.Clone(input)
+	for i, m := range p2Input {
+		p2Input[i].Prize = []uint64{m.Prize[0] + ADDITION_P2, m.Prize[1] + ADDITION_P2}
+	}
+
+	out := fwk.ComputeParallel(p2Input, CountRequiredTokensP2)
+	for tokens := range out {
+		sum += tokens
 	}
 
 	fwk.Solution(2, sum)
