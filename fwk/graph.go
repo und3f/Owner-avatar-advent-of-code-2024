@@ -69,6 +69,7 @@ func (bfs *BFS) PathTo(target int) []int {
 	return path
 }
 
+/* It doesn't work as expected */
 type GraphMask struct {
 	graph Graph
 	mask  []bool
@@ -78,6 +79,7 @@ func (g *GraphMask) Len() int {
 	return g.graph.Len()
 }
 
+/* It doesn't work as expected */
 func (g *GraphMask) Adj(v int) []int {
 	adj := g.graph.Adj(v)
 	for i := len(adj) - 1; i >= 0; i-- {
