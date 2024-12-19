@@ -80,3 +80,19 @@ func HashVect[V constraints.Integer](board [][]rune, vec []V) int {
 func CalcBoardVertices(board [][]rune) int {
 	return len(board) * len(board[0])
 }
+
+func CmpVect[E constraints.Integer](a, b []E) int {
+	checkVectorsMatch(a, b)
+	for i := range a {
+		cmp := a[i] - b[i]
+		if cmp == 0 {
+			continue
+		}
+		if cmp > 0 {
+			return 1
+		}
+		return -1
+	}
+
+	return 0
+}
